@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import fetchWeather from "./api/fetchWeather";
 
 function App() {
   const [query, setQuery] = useState("");
-  const [weather, setWeather] = useState({});
+  const [weather, setWeather] = useState<any>({});
+
+  useEffect(() => {
+    const startLoadFunc = async () => {
+      setWeather(await fetchWeather("new york"));
+    };
+    startLoadFunc();
+  }, []);
 
   const searchFunc = async (e: any) => {
     if (e.key === "Enter") {
